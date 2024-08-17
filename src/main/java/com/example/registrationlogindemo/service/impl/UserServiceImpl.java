@@ -5,7 +5,10 @@ import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.repository.RoleRepository;
 import com.example.registrationlogindemo.repository.UserRepository;
+import com.example.registrationlogindemo.service.GAService;
 import com.example.registrationlogindemo.service.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private GAService gaService;
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -42,6 +47,8 @@ public class UserServiceImpl implements UserService {
             role = checkRoleExist();
         }
         user.setRoles(Arrays.asList(role));
+        user.setSecret(gaService.generateKey());
+        
         userRepository.save(user);
     }
 
@@ -55,6 +62,12 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAll();
         return users.stream().map((user) -> convertEntityToDto(user))
                 .collect(Collectors.toList());
+    }
+
+    public String getQrString(UserDto userDto) {
+        User user = findByEmail(userDto.getEmail());
+
+        return gaService.generateQRUrl(user.getSecret(), user.getEmail());
     }
 
     private UserDto convertEntityToDto(User user){

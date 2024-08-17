@@ -4,6 +4,7 @@ import com.example.registrationlogindemo.dto.UserDto;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.service.UserService;
 import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,6 @@ import java.util.List;
 
 @Controller
 public class AuthController {
-
     private UserService userService;
 
     public AuthController(UserService userService) {
@@ -54,7 +54,11 @@ public class AuthController {
             return "register";
         }
         userService.saveUser(user);
-        return "redirect:/register?success";
+        String qrCode = userService.getQrString(user);
+        
+        model.addAttribute("qr", qrCode);
+        
+        return "mfa";
     }
 
     @GetMapping("/users")
