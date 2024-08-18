@@ -42,9 +42,11 @@ public class AuthController {
 
     // handler method to handle register user form submit request
     @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user") UserDto user,
-                               BindingResult result,
-                               Model model){
+    public String registration(
+        @Valid @ModelAttribute("user") UserDto user,
+        BindingResult result,
+        Model model
+    ){
         User existing = userService.findByEmail(user.getEmail());
         if (existing != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");

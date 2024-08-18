@@ -68,11 +68,4 @@ public class SpringSecurity {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-/*
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
-    }*/
 }
