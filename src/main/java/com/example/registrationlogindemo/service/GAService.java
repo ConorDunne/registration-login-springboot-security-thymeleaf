@@ -1,5 +1,11 @@
 package com.example.registrationlogindemo.service;
 
+/*
+ * Blog: Implementing 2Factor TOTP Using Google Auth in Spring Boot
+ * Author: Shishir Karki
+ * https://medium.com/@skarki2/implementing-totp-using-google-auth-in-spring-boot-70cc4381c5e1
+ */
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;

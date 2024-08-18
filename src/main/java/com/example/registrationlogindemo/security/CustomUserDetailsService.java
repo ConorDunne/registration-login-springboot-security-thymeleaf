@@ -3,9 +3,7 @@ package com.example.registrationlogindemo.security;
 import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.repository.UserRepository;
-import com.example.registrationlogindemo.service.GAService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,13 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import javax.security.sasl.AuthenticationException;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    @Autowired
-    private GAService gaService;
-
     private UserRepository userRepository;
 
     public CustomUserDetailsService(UserRepository userRepository) {
@@ -36,17 +29,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-/*
-        boolean isValid = gaService.isValid(user.getSecret(), 123456);
-        if (!isValid) {
-            throw new UsernameNotFoundException("Invalid MFA code");
-        }
-*/
+
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
             user.getPassword(),
             mapRolesToAuthorities(user.getRoles())
         );
-
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

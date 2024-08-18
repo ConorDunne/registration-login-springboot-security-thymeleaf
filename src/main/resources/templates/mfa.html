@@ -39,6 +39,10 @@
                 <div class="card-body">
                     <img th:src="@{'data:image/jpeg;base64,'+${qr}}" />
                 </div>
+                <div class="mb-3">
+                    <span> MFA Registered?
+                    <a th:href="@{/login}"> Login Here</a>
+                </span>
             </div>
         </div>
     </div>

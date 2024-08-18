@@ -61,6 +61,16 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="secret" class="control-label">MFA Code *</label>
+                            <input type="secret"
+                                   id="number"
+                                   name="secret"
+                                   class="form-control"
+                                   placeholder="MFA Code"
+                            />
+                        </div>
+
+                        <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Login</button>
                             <span> Not registered?
                             <a th:href="@{/register}"> Register/SignUp Here</a>
